@@ -1,68 +1,51 @@
 <template>
   <div>
-    <div class="app-main-layout">
-      <nav class="navbar orange lighten-1">
-        <div class="nav-wrapper">
-          <div class="navbar-left">
-            <a href="#">
-              <i class="material-icons black-text">dehaze</i>
-            </a>
-            <span class="black-text">12.12.12</span>
-          </div>
+    <Loader
+        v-if="loading"/>
 
-          <ul class="right hide-on-small-and-down">
-            <li>
-              <a
-                  class="dropdown-trigger black-text"
-                  href="#"
-                  data-target="dropdown"
-              >
-                USER NAME
-                <i class="material-icons right">arrow_drop_down</i>
-              </a>
+    <div class="app-main-layout" v-else>
 
-              <ul id='dropdown' class='dropdown-content'>
-                <li>
-                  <a href="#" class="black-text">
-                    <i class="material-icons">account_circle</i>Профиль
-                  </a>
-                </li>
-                <li class="divider" tabindex="-1"></li>
-                <li>
-                  <a href="#" class="black-text">
-                    <i class="material-icons">assignment_return</i>Выйти
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </nav>
+      <nav-bar @open-close="isOpen = !isOpen" />
 
-      <side-bar />
+      <side-bar :sideBarIsOpen="isOpen"/>
 
-      <main class="app-content">
+      <main class="app-content" :class="{full: !isOpen}">
         <div class="app-page">
             <router-view />
         </div>
       </main>
 
       <div class="fixed-action-btn">
-        <a class="btn-floating btn-large blue" href="#">
+        <router-link class="btn-floating btn-large blue" to="/record">
           <i class="large material-icons">add</i>
-        </a>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import SideBar from "../components/SideBar";
+import NavBar from "../components/app/NavBar"
+import SideBar from "../components/app/SideBar"
+import Loader from "../components/app/Loader";
 
 export default {
   name: "main-layout",
+  data: () => ({
+    isOpen: true,
+    loading: true
+  }),
   components: {
+    Loader,
+    NavBar,
     SideBar
+  },
+  mounted() {
+    if(!Object.keys(this.$store.getters.userData).length) {
+      this.$store.dispatch('getUserData')
+    }
+
+    this.loading = false
   }
 }
 </script>
