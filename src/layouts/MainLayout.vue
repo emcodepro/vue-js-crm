@@ -7,7 +7,9 @@
 
       <nav-bar @open-close="isOpen = !isOpen" />
 
-      <side-bar :sideBarIsOpen="isOpen"/>
+      <side-bar
+          :sideBarIsOpen="isOpen"
+          :key="locale"/>
 
       <main class="app-content" :class="{full: !isOpen}">
         <div class="app-page">
@@ -35,14 +37,19 @@ export default {
     isOpen: true,
     loading: true
   }),
+  computed: {
+    locale() {
+      return this.$store.getters.userData.locale
+    }
+  },
   components: {
     Loader,
     NavBar,
     SideBar
   },
-  mounted() {
+  async mounted() {
     if(!Object.keys(this.$store.getters.userData).length) {
-      this.$store.dispatch('getUserData')
+      await this.$store.dispatch('getUserData')
     }
 
     this.loading = false

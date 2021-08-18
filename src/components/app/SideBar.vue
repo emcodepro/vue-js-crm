@@ -16,15 +16,17 @@
 export default {
   name: "SideBar",
   props: ['sideBarIsOpen'],
-  data: () => ({
-    links: [
-      {title: 'Счет', to: '/', exact: true},
-      {title: 'История', to: '/history'},
-      {title: 'Планирование', to: '/planning'},
-      {title: 'Новая запись', to: '/record'},
-      {title: 'Категории', to: '/categories'}
-    ]
-  })
+  data() {
+    return {
+      links: [
+        {title: this.$t('bill'), to: '/', exact: true},
+        {title: this.$t('history'), to: '/history'},
+        {title: this.$t('planning'), to: '/planning'},
+        {title: this.$t('newRecord'), to: '/record'},
+        {title: this.$t('categories'), to: '/categories'}
+      ]
+    }
+  }
 }
 </script>
 

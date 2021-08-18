@@ -1,3 +1,4 @@
+import store from '../store'
 export default function dateFilter(value, format = 'date') {
     const options = {}
 
@@ -12,5 +13,6 @@ export default function dateFilter(value, format = 'date') {
         options.minute = '2-digit'
         options.second = '2-digit'
     }
-    return Intl.DateTimeFormat('en', options).format(value)
+    const locale = store.getters.userData.locale  || 'ru-RU'
+    return Intl.DateTimeFormat(locale, options).format(value)
 }

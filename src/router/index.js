@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import firebase from "firebase";
 
 Vue.use(VueRouter)
 
@@ -10,7 +11,8 @@ const router = new VueRouter({
       path: '/',
       name: 'Home',
       meta: {
-        layout: 'main'
+        layout: 'main',
+        auth: true
       },
       component: () => import('../views/Home')
     },
@@ -18,15 +20,17 @@ const router = new VueRouter({
       path: '/categories',
       name: 'Categories',
       meta: {
-        layout: 'main'
+        layout: 'main',
+        auth: true
       },
       component: () => import('../views/Categories')
     },
     {
-      path: '/detail',
+      path: '/detail/:id',
       name: 'Detail',
       meta: {
-        layout: 'main'
+        layout: 'main',
+        auth: true
       },
       component: () => import('../views/Detail')
     },
@@ -34,7 +38,8 @@ const router = new VueRouter({
       path: '/history',
       name: 'History',
       meta: {
-        layout: 'main'
+        layout: 'main',
+        auth: true
       },
       component: () => import('../views/History')
     },
@@ -50,7 +55,8 @@ const router = new VueRouter({
       path: '/planning',
       name: 'Planning',
       meta: {
-        layout: 'main'
+        layout: 'main',
+        auth: true
       },
       component: () => import('../views/Planning')
     },
@@ -58,7 +64,8 @@ const router = new VueRouter({
       path: '/profile',
       name: 'Profile',
       meta: {
-        layout: 'main'
+        layout: 'main',
+        auth: true
       },
       component: () => import('../views/Profile')
     },
@@ -66,7 +73,8 @@ const router = new VueRouter({
       path: '/record',
       name: 'Record',
       meta: {
-        layout: 'main'
+        layout: 'main',
+        auth: true
       },
       component: () => import('../views/Record')
     },
@@ -79,6 +87,17 @@ const router = new VueRouter({
       component: () => import('../views/Register')
     },
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  const user = firebase.auth().currentUser
+  const authRequired = to.matched.some(r => r.meta.auth)
+
+  if(authRequired && !user) {
+    next('/login?message=not-authorized')
+  } else {
+    next()
+  }
 })
 
 export default router

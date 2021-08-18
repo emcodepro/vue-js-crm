@@ -21,6 +21,17 @@ export default {
             }catch (e) {
                 console.log(e)
             }
+        },
+        async updateUserData({dispatch, commit, getters}, newData) {
+            try {
+                const uid = await dispatch('getUid')
+                const updatedData = {...getters.userData, ...newData}
+                await firebase.database().ref(`/users/${uid}/info`).update(updatedData)
+                commit('setData', updatedData)
+            } catch (e) {
+                commit('setError', e)
+                throw e
+            }
         }
     },
     getters: {
