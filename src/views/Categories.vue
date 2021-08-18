@@ -23,6 +23,11 @@ import Loader from "../components/app/Loader";
 
 export default {
   name: "Categories",
+  metaInfo() {
+    return {
+      title: this.$title('categories')
+    }
+  },
   data: () => ({
     categories: [],
     loading: true,

@@ -90,7 +90,12 @@ import M from "materialize-css"
 import {mapGetters} from 'vuex'
 
 export default {
-  name: "Record",
+  name: "Record",  metaInfo() {
+    return {
+      title: this.$title('newRecord')
+    }
+  },
+
   components: {Loader},
   data: () => ({
     categories: [],

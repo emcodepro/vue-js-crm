@@ -41,6 +41,11 @@ import {required} from 'vuelidate/lib/validators'
 
 export default {
   name: "Profile",
+  metaInfo() {
+    return {
+      title: this.$title('profile')
+    }
+  },
   data: () => ({
     name: '',
     isRuLocale: true

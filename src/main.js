@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import Vuelidate from "vuelidate/src"
+import VueMeta from "vue-meta";
 import Paginate from 'vuejs-paginate'
 import router from './router'
 import store from './store'
@@ -10,6 +11,7 @@ import 'materialize-css/dist/js/materialize.min'
 import messagePlugin from './utils/message.plugin'
 import tooltipDirective from './directives/tooltip.directive'
 import translatePlugin from './utils/translate.plugin'
+import titlePlugin from "./utils/title.plugin";
 import firebase from 'firebase'
 import 'firebase/auth'
 import 'firebase/database'
@@ -21,6 +23,8 @@ Vue.directive('tooltip', tooltipDirective)
 Vue.use(Vuelidate)
 Vue.use(messagePlugin)
 Vue.use(translatePlugin)
+Vue.use(titlePlugin)
+Vue.use(VueMeta)
 Vue.component('Paginate', Paginate)
 
 firebase.initializeApp({
